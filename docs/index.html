@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>Bulk Google Index Checker Tool - Instantly Check Indexed Pages | Boost SEO Efficiency</title>
+    <meta name="title" content="Bulk Google Index Checker Tool - Instantly Check Indexed Pages | Boost SEO Efficiency">
+    <meta name="description" content="Tired of manually inspecting each URL on Google Search Console to check if it's indexed? Say goodbye to the hassle! Our advanced bulk indexing checker tool allows you to instantly check the indexing status of multiple URLs in real-time. Save time, streamline your SEO efforts, and boost website performance effortlessly. Try it now for free!">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Code Mirror CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/elegant.min.css">
+    <!-- Code Mirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.js"></script>
+    <style>
+        .CodeMirror {
+            font-size: 14px;
+            max-height: 350px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12 mt-4">
+                <h1 class="text-center">SEO Bulk URL Opener</h1>
+                <div class="tab-content">
+                    <div class="container my-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="urlOpenerForm" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="prefix">Prefix</label>
+                                                <select id="prefix" class="form-control">
+                                                    <option value="cache">Cache</option>
+                                                    <option value="page">Page</option>
+                                                    <option value="site">Site</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="urlEditor">URLs</label>
+                                                <textarea id="urlEditor"></textarea>
+                                                <small class="form-text text-muted">
+                                                    Enter URLs to open, one per line
+                                                </small>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary">Open URLs</button>
+                                                <button type="button" class="btn btn-outline-secondary" id="clearForm">
+                                                    Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        const urlEditor = CodeMirror.fromTextArea($('#urlEditor').get(0), {
+            theme: 'elegant',
+            lineNumbers: true,
+            matchBrackets: true,
+        });
+
+        $('#clearForm').click(function () {
+            $('#urlOpenerForm').get(0).reset();
+
+            urlEditor.setValue('');
+        });
+
+        const endPoints = {
+            cache: 'http://webcache.googleusercontent.com/search?q=cache:',
+            page: 'https://www.google.com/search?q=page:',
+            site: 'https://www.google.com/search?q=site:',
+
+        };
+
+        $('#urlOpenerForm').submit(function (e) {
+            e.preventDefault();
+
+            const prefix = $('#prefix').val();
+
+            urlEditor.eachLine(function (line) {
+                const url = line.text;
+
+                if (url) {
+                    window.open((endPoints[prefix] + url), '_blank');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
